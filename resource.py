@@ -1,11 +1,11 @@
-from langchain_openai import OpenAI, ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain import hub
 import os
 import openai
 from api_sources import api_tools
 from db_helper_tool import db_tools
 from web import web_tools
-from langchain.agents import create_openai_functions_agent, AgentExecutor, create_openai_tools_agent
+from langchain.agents import create_openai_functions_agent, AgentExecutor
 from dotenv import load_dotenv, find_dotenv
 
 

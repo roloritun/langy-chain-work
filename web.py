@@ -1,10 +1,6 @@
-from typing import Type
-from langchain import hub
 
-from langchain.agents import create_openai_tools_agent, AgentExecutor
 from langchain.tools.retriever import create_retriever_tool
 from langchain_community.document_loaders import WebBaseLoader
-from langchain_core.tools import BaseTool
 from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pinecone import Pinecone, ServerlessSpec

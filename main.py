@@ -39,3 +39,8 @@ def root():
 @app.get("/ask", dependencies=[Depends(run_agent)])
 def ask_a_question(question: str):
     return run_agent(question)
+
+
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app)

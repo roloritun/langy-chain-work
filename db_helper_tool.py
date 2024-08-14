@@ -1,12 +1,6 @@
-from langchain import hub
-from langchain.agents import create_openai_tools_agent, AgentExecutor
 from langchain_community.utilities.sql_database import SQLDatabase
-from langchain_community.agent_toolkits import create_sql_agent, SQLDatabaseToolkit
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.tools import BaseTool
+from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel, Field
-from typing import Type, Any
 
 from sqlalchemy import create_engine
 from sqlalchemy.pool import StaticPool
@@ -14,22 +8,25 @@ import os
 import openai
 import sys
 
-sys.path.append('../..')
+sys.path.append("../..")
 
 from dotenv import load_dotenv, find_dotenv
 
 _ = load_dotenv(find_dotenv())  # read local .env file
 
-openai.api_key = os.environ['OPENAI_API_KEY']
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 llm = ChatOpenAI(model="gpt-4o-mini")
 uri = "sqlite:///northwind.db"
 dbname = "Northwind"
+
+
 def get_engine_for_northwind_db():
     return create_engine(
         "sqlite:///northwind.db",
         poolclass=StaticPool,
     )
+
 
 def get_db():
     engine = get_engine_for_northwind_db()
@@ -69,7 +66,7 @@ db_tools = toolkit.get_tools()
 #         raise NotImplementedError("does not support async")
 
 
-#tools = [NW_Tool()]
+# tools = [NW_Tool()]
 
 
 # prompt = hub.pull("hwchase17/openai-tools-agent")
@@ -82,4 +79,3 @@ db_tools = toolkit.get_tools()
 # result = agent_executor.invoke({"input": "What is the total number of employees?"})
 #
 # #print(result)
-
