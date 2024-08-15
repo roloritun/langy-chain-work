@@ -2,7 +2,7 @@
 from fastapi import FastAPI, Depends
 from pydantic_settings import BaseSettings
 
-from resource import run_agent
+from .agents.resource import run_agent
 
 
 class Settings(BaseSettings):
@@ -24,7 +24,7 @@ def get_app_description():
         "\n"
         "        Welcome to the Langchain Agent Test API!\n"
         "    	This API to query the northwind db, openweather api and rest countries json repo with natural language.\n"
-        "    	Use the '/ask/' endpoint with a POST request to query.\n"
+        "    	Use the '/ask/' endpoint with a GET request with query parameter question to query.\n"
         "    	Example usage: POST to '/ask/' with JSON data containing input\n"
         "    	"
     )
@@ -39,8 +39,3 @@ def root():
 @app.get("/ask", dependencies=[Depends(run_agent)])
 def ask_a_question(question: str):
     return run_agent(question)
-
-
-if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run(app)
