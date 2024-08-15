@@ -1,4 +1,3 @@
-
 from langchain.tools.retriever import create_retriever_tool
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_openai import OpenAIEmbeddings
@@ -7,7 +6,6 @@ from pinecone import Pinecone, ServerlessSpec
 from langchain_pinecone import PineconeVectorStore
 import time
 
-from pydantic import BaseModel, Field
 
 from langchain_openai import ChatOpenAI
 import openai
@@ -16,20 +14,24 @@ from dotenv import load_dotenv, find_dotenv
 
 _ = load_dotenv(find_dotenv())  # read local .env file
 
-openai.api_key = os.environ['OPENAI_API_KEY']
+openai.api_key = os.environ["OPENAI_API_KEY"]
 llm = ChatOpenAI(temperature=0)
 
 country_url = "https://restcountries.com/v3.1/all"
 
 
 def get_countries_json():
-    loader = WebBaseLoader(web_paths=(country_url,), )
+    loader = WebBaseLoader(
+        web_paths=(country_url,),
+    )
     countries_json = loader.load()
     return countries_json
 
 
 def split_docs(documents, chunk_size=1000, chunk_overlap=20):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size, chunk_overlap=chunk_overlap
+    )
     splits = text_splitter.split_documents(documents)
     return splits
 
@@ -54,7 +56,7 @@ def store_vector_retriever(splits, index_name="langchain-json"):
 
     index = pc.Index(index_name)
     vector_store = PineconeVectorStore(index=index, embedding=OpenAIEmbeddings())
-    #vector_store.add_documents(splits)
+    # vector_store.add_documents(splits)
     return vector_store
 
 
@@ -83,4 +85,3 @@ web_tools = [get_country_tool()]
 # result = agent_executor.invoke({"input": "Tell me about Nigeria"})
 #
 # #print(result)
-

@@ -1,13 +1,14 @@
-from langchain_openai import ChatOpenAI
-from langchain import hub
 import os
-import openai
-from api_sources import api_tools
-from db_helper_tool import db_tools
-from web import web_tools
-from langchain.agents import create_openai_functions_agent, AgentExecutor
-from dotenv import load_dotenv, find_dotenv
 
+import openai
+from dotenv import find_dotenv, load_dotenv
+from langchain.agents import AgentExecutor, create_openai_functions_agent
+from langchain_openai import ChatOpenAI
+
+from .tools.api_tool import api_tools
+from .tools.db_helper_tool import db_tools
+from .tools.web_tool import web_tools
+from .utils.prompt import get_prompt_for_openai_functions_agent
 
 _ = load_dotenv(find_dotenv())  # read local .env file
 
@@ -17,7 +18,7 @@ openai.api_key = os.environ['OPENAI_API_KEY']
 def run_agent(question: str):
     llm = ChatOpenAI(model="gpt-4o-mini")
 
-    prompt = hub.pull("hwchase17/openai-functions-agent")
+    prompt = get_prompt_for_openai_functions_agent()
 
     db = db_tools
     opw = api_tools

@@ -36,37 +36,7 @@ def get_db():
 
 toolkit = SQLDatabaseToolkit(db=get_db(), llm=llm)
 db_tools = toolkit.get_tools()
-# class UserRefPromptInput(BaseModel):
-#     """get_info_from_prompt"""
-#     question: str = Field(description="question from the prompt")
-
-
-# class NW_Tool(BaseTool):
-#     name = dbname
-#     description = """
-#         This is the @northwind database tool. Use it when questions make reference to the database. \
-#         It is useful when user want to read data or answer questions regarding information stored in the \
-#         northwind database
-#         """
-#     args_schema: Type[BaseModel] = UserRefPromptInput
-#
-#     def _run(self, question: str):
-#         agent = create_sql_agent(
-#             llm,
-#             db=get_db(),
-#             prompt=prompt,
-#             agent_type="openai-tools",
-#             verbose=True,
-#         )
-#         response = agent.invoke({"input": question})
-#         print(response)
-#         return response
-#
-#     def _arun(self, question: str):
-#         raise NotImplementedError("does not support async")
-
-
-# tools = [NW_Tool()]
+ 
 
 
 # prompt = hub.pull("hwchase17/openai-tools-agent")
