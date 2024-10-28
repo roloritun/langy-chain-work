@@ -7,3 +7,5 @@ __pycache__
 aaif_exercise.code-workspace
 .venv/*
 ,Venv/*.*
+*.db
+*.yaml
